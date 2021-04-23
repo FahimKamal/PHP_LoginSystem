@@ -14,7 +14,7 @@ function emptyInputSignup($ID, $name, $email, $pwd, $pwdrepeat){
 	return $result;
 }
 
-// Function checks if the name of the user is currect or not.
+// Function checks if the name of the user is correct or not.
 function invalidName($name){
 	$result;
 
@@ -63,7 +63,7 @@ function IDExists($conn, $ID, $email){
 	$sql = "SELECT * FROM users WHERE studentId = ? OR email = ?;";
 	$stmt = mysqli_stmt_init($conn);
 
-	// Check is the sql and sql statement is currect.
+	// Check is the sql and sql statement is correct.
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
 		header("location: ../signup.php?error=stmtfailed");
 		exit();
@@ -89,7 +89,7 @@ function IDExists($conn, $ID, $email){
 	mysqli_stmt_close($stmt);
 }
 
-// If this function is called that means everyting is OK. Now put all the 
+// If this function is called that means everything is OK. Now put all the
 // data in the database and be done with it.
 function createUser($conn, $ID, $name, $email, $pwd){
 	$sql = "INSERT INTO users(studentId, name, email, password) VALUES(?, ?, ?, ?);";
@@ -112,4 +112,41 @@ function createUser($conn, $ID, $name, $email, $pwd){
 	// Now inform the user that the signUp is successful.
 	header("location: ../signup.php?error=none");
 	exit();
+}
+
+// Function checks if all the fields is not empty.
+function emptyInputSignin($idorEmail, $pwd){
+	$result;
+
+	if (empty($idorEmail) || empty($pwd)) {
+		$result = true;
+	}
+	else{
+		$result = false;
+	}
+
+	return $result;
+}
+
+function loginUser($conn, $idorEmail, $pwd){
+	$userExists = IDExists($conn, $idorEmail, $idorEmail);
+
+	if ($userExists === false) {
+		header("location: ../signin.php?error=wrongSignin");
+		exit();
+	}
+
+	$pwdHashed = $userExists['password'];
+	$checkPwd = password_verify($pwd, $pwdHashed);
+	if ($checkPwd === false) {
+		header("location: ../signin.php?error=wrongPwd");
+		exit();
+	}
+	else if ($checkPwd === true) {
+		session_start();
+		$_SESSION["userid"] = $userExists['studentId'];
+		$_SESSION["userName"] = $userExists['name'];
+		header("location: ../index.php?error=none");
+		exit();
+	}
 }

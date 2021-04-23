@@ -3,7 +3,7 @@
 // Check if the user actually pressed the submit button. 
 if (isset($_POST["submit"])) {
 	
-	// get the inputs and put them in variables for latter use.
+	// get the inputs and put them in variables for later use.
 	$ID = $_POST["ID"];
 	$name = $_POST["name"];
 	$email = $_POST["email"];

@@ -36,6 +36,68 @@
 		  <button type="submit" name="submit" class="btn btn-primary">Sign Up</button>
 		</form>
 
+		<!-- Error handling php script. -->
+		<?php 
+			if (isset($_GET["error"])) {
+				if ($_GET["error"] == "emptyinput") {
+					echo '
+						<div class="alert alert-warning" role="alert">
+						  Fill in all fields!
+						</div>
+					';
+				}
+
+				else if ($_GET["error"] == "invalidName") {
+					echo '
+						<div class="alert alert-danger" role="alert">
+						  Invalid Name.
+						</div>
+					';
+				}
+
+				else if ($_GET["error"] == "invalidEmail") {
+					echo '
+						<div class="alert alert-danger" role="alert">
+						  Invalid Email Address.
+						</div>
+					';
+				}
+
+				else if ($_GET["error"] == "passwordDontMatch") {
+					echo '
+						<div class="alert alert-danger" role="alert">
+						  Passwords doesn\'t match.
+						</div>
+					';
+				}
+
+				else if ($_GET["error"] == "IDTaken") {
+					echo '
+						<div class="alert alert-danger" role="alert">
+						  The user already exists in the database.
+						</div>
+					';
+				}
+
+				else if ($_GET["error"] == "stmtfailed") {
+					echo '
+						<div class="alert alert-danger" role="alert">
+						  Something went wrong. try again!
+						</div>
+					';
+				}
+
+				else if ($_GET["error"] == "none") {
+					echo '
+						<div class="alert alert-success" role="alert">
+						  Everything is good. You have successfully Signed in!
+						</div>
+					';
+				}
+			}
+		 ?>
+		 <!-- Error handling php script. -->
+
 <?php 
   include_once 'footer.php'; 
  ?>

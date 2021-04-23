@@ -1,3 +1,7 @@
+<?php 
+  session_start();
+ ?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -19,12 +23,31 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="signup.php">Sign Up</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="signin.php">Sign In</a>
-              </li>              
+              <?php 
+                  if (isset($_SESSION["userid"])) {
+                    echo '
+                        <li class="nav-item">
+                          <a class="nav-link" href="profile.php">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="includes/logout.php">Logout</a>
+                        </li>
+                    ';
+                  }
+                  else {
+                    echo '
+                        <li class="nav-item">
+                          <a class="nav-link" href="signup.php">Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="signin.php">Sign In</a>
+                        </li>
+                    ';
+                    
+                  }
+               ?>
+              
+            </ul>              
           </div>
         </div>
     </nav>
